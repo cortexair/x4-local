@@ -184,7 +184,41 @@ See [docs/commands.md](docs/commands.md) for the full reference.
 
 ## AI-Assisted Development
 
-This project includes tooling for AI-assisted development with Claude Code.
+x4 is built for AI-first development with [Claude Code](https://claude.ai/download). The **x4 Agent Plugins** turn Claude Code into a full development team — from project scaffolding to shipping PRs.
+
+### x4 Agent Plugins
+
+Install the complete AI-powered development workflow:
+
+```bash
+# Add the x4 plugin marketplace
+/plugin marketplace add studiox4/x4-agent-plugins
+
+# Install all plugins
+/plugin install x4-scaffold@x4-agent-plugins
+/plugin install x4-project-tracker@x4-agent-plugins
+/plugin install x4-agent-team-ops@x4-agent-plugins
+/plugin install x4-llmstxt-manager@x4-agent-plugins
+```
+
+| Plugin                 | What it does                                                                                                   |
+| ---------------------- | -------------------------------------------------------------------------------------------------------------- |
+| **x4-scaffold**        | `/x4-create my-app` — scaffold a full-stack project with presets (saas, full-stack, landing, api-only)         |
+| **x4-project-tracker** | `/idea`, `/plan-backlog` — capture ideas, triage, brainstorm, and generate PRDs                                |
+| **x4-agent-team-ops**  | `/work` — dispatch an agent team (backend, frontend, reviewer, tester, performance) to build, review, and ship |
+| **x4-llmstxt-manager** | `/llmstxt-update` — scan dependencies and download AI-readable reference docs                                  |
+
+The full pipeline: **Onboard** → **Scaffold** → **Capture** → **Plan** → **Build** → **Ship**
+
+```bash
+/x4-onboard                                    # Check tools & accounts
+/x4-create my-app --preset saas                # Scaffold project
+/idea "Add user dashboard with analytics"       # Capture feature idea
+/plan-backlog                                   # Brainstorm → plan → PRD
+/work                                           # Agent team builds & ships
+```
+
+See the [x4 Agent Plugins repo](https://github.com/studiox4/x4-agent-plugins) for full documentation.
 
 ### LLM Reference Docs
 
