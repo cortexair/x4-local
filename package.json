@@ -6,7 +6,7 @@
     "apps/*"
   ],
   "scripts": {
-    "dev": "turbo dev",
+    "dev": "turbo dev --concurrency 15",
     "build": "turbo build",
     "lint": "turbo lint",
     "type-check": "turbo type-check",

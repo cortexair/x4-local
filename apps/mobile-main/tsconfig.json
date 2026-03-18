@@ -11,13 +11,6 @@
       "react": ["./node_modules/@types/react"]
     }
   },
-  "include": [
-    "app/**/*.ts",
-    "app/**/*.tsx",
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    ".expo/types/**/*.ts",
-    "expo-env.d.ts"
-  ],
+  "include": ["app/**/*.ts", "app/**/*.tsx", "src/**/*.ts", "src/**/*.tsx"],
   "exclude": ["node_modules", "dist"]
 }

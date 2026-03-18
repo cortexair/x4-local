@@ -13,12 +13,13 @@
     "android": "expo run:android"
   },
   "dependencies": {
-    "@x4/shared": "workspace:*",
-    "@x4/auth": "workspace:*",
     "@tanstack/react-query": "^5.60.0",
     "@trpc/client": "^11.0.0",
     "@trpc/react-query": "^11.0.0",
+    "@x4/auth": "workspace:*",
+    "@x4/shared": "workspace:*",
     "expo": "~52.0.0",
+    "expo-asset": "55.0.9",
     "expo-router": "~4.0.0",
     "expo-secure-store": "~14.2.4",
     "expo-status-bar": "~2.2.3",

@@ -24,7 +24,7 @@
     "@types/bun": "latest"
   },
   "scripts": {
-    "dev": "bun --watch src/index.ts",
+    "dev": "bun --env-file=../../.env.local --watch src/index.ts",
     "build": "bun build src/index.ts --outdir dist --target bun",
     "lint": "eslint src/",
     "type-check": "tsc --noEmit",
