@@ -10,7 +10,8 @@ interface StickyScrollItem {
   description: string;
   badge: string;
   color: string;
-  code: string;
+  code?: string;
+  visual?: React.ReactNode;
 }
 
 interface StickyScrollProps {
@@ -21,28 +22,41 @@ export function StickyScroll({ items }: StickyScrollProps) {
   return (
     <div className="relative">
       {items.map((item, i) => (
-        <StickyScrollSection key={item.title} item={item} index={i} />
+        <StickyScrollSection key={item.title} item={item} index={i} isFirst={i === 0} />
       ))}
     </div>
   );
 }
 
-function StickyScrollSection({ item, index }: { item: StickyScrollItem; index: number }) {
+function StickyScrollSection({
+  item,
+  index,
+  isFirst,
+}: {
+  item: StickyScrollItem;
+  index: number;
+  isFirst: boolean;
+}) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start end', 'end start'],
   });
 
-  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0]);
+  // First section starts fully visible and only fades on exit
+  const opacity = useTransform(
+    scrollYProgress,
+    isFirst ? [0, 0.05, 0.7, 1] : [0, 0.2, 0.7, 1],
+    isFirst ? [1, 1, 1, 0] : [0, 1, 1, 0],
+  );
   const x = useTransform(
     scrollYProgress,
-    [0, 0.3, 0.7, 1],
-    [index % 2 === 0 ? -60 : 60, 0, 0, index % 2 === 0 ? -60 : 60],
+    isFirst ? [0, 0.05, 0.7, 1] : [0, 0.2, 0.7, 1],
+    isFirst ? [0, 0, 0, 0] : [index % 2 === 0 ? -40 : 40, 0, 0, index % 2 === 0 ? -40 : 40],
   );
 
   return (
-    <div ref={ref} className="min-h-screen py-32">
+    <div ref={ref} className="min-h-screen py-24">
       <div className="sticky top-24 mx-auto max-w-7xl px-6">
         <motion.div
           style={{ opacity, x }}
@@ -67,22 +81,23 @@ function StickyScrollSection({ item, index }: { item: StickyScrollItem; index: n
             </p>
           </div>
 
-          {/* Code panel */}
-          <div
-            className={cn(
-              'overflow-hidden rounded-xl border border-border bg-card',
-              index % 2 === 1 && 'lg:col-start-1',
+          {/* Right panel — code or visual */}
+          <div className={cn(index % 2 === 1 && 'lg:col-start-1')}>
+            {item.code ? (
+              <div className="overflow-hidden rounded-xl border border-border bg-card">
+                <div className="flex items-center gap-2 border-b border-border px-4 py-3">
+                  <span className="h-3 w-3 rounded-full bg-red-500/60" />
+                  <span className="h-3 w-3 rounded-full bg-yellow-500/60" />
+                  <span className="h-3 w-3 rounded-full bg-green-500/60" />
+                </div>
+                <CodeBlock
+                  code={item.code}
+                  className="overflow-x-auto p-6 font-mono text-sm leading-relaxed"
+                />
+              </div>
+            ) : (
+              item.visual
             )}
-          >
-            <div className="flex items-center gap-2 border-b border-border px-4 py-3">
-              <span className="h-3 w-3 rounded-full bg-red-500/60" />
-              <span className="h-3 w-3 rounded-full bg-yellow-500/60" />
-              <span className="h-3 w-3 rounded-full bg-green-500/60" />
-            </div>
-            <CodeBlock
-              code={item.code}
-              className="overflow-x-auto p-6 font-mono text-sm leading-relaxed"
-            />
           </div>
         </motion.div>
       </div>

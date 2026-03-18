@@ -1,14 +1,43 @@
 import type { Metadata } from 'next';
 import { StickyScroll } from '@/components/sections/StickyScroll';
 import { CTASection } from '@/components/sections/CTASection';
+import {
+  AgentTeamVisual,
+  RailwayDeployVisual,
+  NeonDatabaseVisual,
+} from '@/components/sections/FeatureVisuals';
 
 export const metadata: Metadata = {
   title: 'Features',
   description:
-    "Explore x4's features: type-safe APIs with tRPC, built-in authentication, AI integration, and multi-platform support.",
+    "Explore x4's features: AI agent teams, automated deployment, serverless databases, type-safe APIs, and multi-platform support.",
 };
 
 const FEATURES = [
+  {
+    badge: 'Agent Teams',
+    title: 'AI Agents That Design, Plan & Build',
+    description:
+      'Four Claude Code plugins work together as a development team. Brainstorm approaches, generate PRDs, build the implementation, write tests, run security review, and ship a pull request — all from a single /work command. Fully tested, fully reviewed, ready to merge.',
+    color: 'bg-violet-500/10 text-violet-400',
+    visual: <AgentTeamVisual />,
+  },
+  {
+    badge: 'Deployment',
+    title: 'Push to Deploy with Railway',
+    description:
+      'Every push to main auto-deploys your API, web app, marketing site, and docs to Railway. No Dockerfiles, no build configs — Railpack auto-detects Bun and Next.js. Four services running in production from a single git push. Add custom domains, scale replicas, and monitor logs from one dashboard.',
+    color: 'bg-cyan-500/10 text-cyan-400',
+    visual: <RailwayDeployVisual />,
+  },
+  {
+    badge: 'Database',
+    title: 'Serverless Postgres with Neon',
+    description:
+      'Neon gives you Postgres that scales to zero and branches like git. Create isolated database branches for feature work, run migrations safely, and merge back to production. Paired with Drizzle ORM for type-safe schemas, queries, and automatic migrations — all in TypeScript.',
+    color: 'bg-emerald-500/10 text-emerald-400',
+    visual: <NeonDatabaseVisual />,
+  },
   {
     badge: 'Type Safety',
     title: 'End-to-End Type Safety with tRPC',
@@ -91,29 +120,6 @@ export const aiRouter = router({
     }),
 });`,
   },
-  {
-    badge: 'Database',
-    title: 'Serverless Postgres with Drizzle',
-    description:
-      'Neon serverless Postgres with Drizzle ORM gives you type-safe queries, automatic migrations, and zero cold starts. Define your schema in TypeScript, generate migrations, and deploy to a globally distributed database.',
-    color: 'bg-blue-500/10 text-blue-400',
-    code: `// Schema as TypeScript
-export const projects = pgTable("projects", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  name: varchar("name", { length: 255 }).notNull(),
-  status: text("status").default("active"),
-  ownerId: uuid("owner_id").references(() => users.id),
-  createdAt: timestamp("created_at").defaultNow(),
-  updatedAt: timestamp("updated_at").defaultNow(),
-});
-
-// Type-safe queries
-const results = await db
-  .select()
-  .from(projects)
-  .where(eq(projects.ownerId, userId))
-  .orderBy(desc(projects.createdAt));`,
-  },
 ];
 
 export default function FeaturesPage() {
@@ -123,11 +129,12 @@ export default function FeaturesPage() {
       <section className="pb-12 pt-32">
         <div className="mx-auto max-w-4xl px-6 text-center">
           <h1 className="text-4xl font-bold sm:text-5xl">
-            Features built for <span className="gradient-text">shipping fast</span>
+            From idea to <span className="gradient-text">production</span> — automated
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">
-            Every feature is designed to work together. Type safety flows from database to UI. Auth
-            works on every platform. AI is a tRPC call away.
+            AI agent teams design and build your features. Railway deploys them automatically. Neon
+            hosts your data serverlessly. Everything else — auth, type safety, AI — is wired in from
+            day one.
           </p>
         </div>
       </section>
