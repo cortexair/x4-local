@@ -1,6 +1,13 @@
 # Contributing
 
-Development workflow, conventions, and style guide for x4-mono.
+Thanks for your interest in contributing to x4-mono! This guide covers everything you need to get started.
+
+## How to Contribute
+
+- **Bug reports** — [Open an issue](https://github.com/corbanb/x4-mono/issues/new?template=bug-report.yml) with steps to reproduce
+- **Feature requests** — [Open an issue](https://github.com/corbanb/x4-mono/issues/new?template=feature-request.yml) describing the feature and why it would be useful
+- **Pull requests** — Fork the repo, create a branch from `main`, and submit a PR
+- **Security issues** — See [SECURITY.md](.github/SECURITY.md) — do NOT open a public issue
 
 ## Development Setup
 
@@ -110,3 +117,7 @@ Before submitting, verify:
 - [ ] No `any` types
 - [ ] No dependency boundary violations
 - [ ] Documentation updated if needed
+
+## License
+
+By contributing, you agree that your contributions will be licensed under the [MIT License](./LICENSE).

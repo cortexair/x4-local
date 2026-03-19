@@ -17,7 +17,7 @@ If you discover a security vulnerability, please report it responsibly.
 
 ### How to Report
 
-1. Email: [security contact to be configured]
+1. Email: security@px4.dev
 2. Include a description of the vulnerability, steps to reproduce, and potential impact
 3. Allow reasonable time for a fix before public disclosure
 
