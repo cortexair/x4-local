@@ -1,20 +1,12 @@
 import Link from 'next/link';
 import { Github, Twitter } from 'lucide-react';
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000';
-const DOCS_URL = process.env.NEXT_PUBLIC_DOCS_URL ?? 'http://localhost:3003';
-
 const FOOTER_SECTIONS = {
   Product: [
     { href: '/features', label: 'Features' },
     { href: '/stack', label: 'Stack' },
     { href: '/plugins', label: 'Plugins' },
     { href: '/ai', label: 'AI' },
-  ],
-  Resources: [
-    { href: DOCS_URL, label: 'Documentation', external: true },
-    { href: `${DOCS_URL}/api`, label: 'API Reference', external: true },
-    { href: '/docs', label: 'Quick Start' },
   ],
   Company: [
     { href: '/about', label: 'About' },
@@ -93,20 +85,6 @@ export function Footer() {
           <p className="text-sm text-muted-foreground">
             &copy; {new Date().getFullYear()} x4. All rights reserved.
           </p>
-          <div className="flex gap-6">
-            <a
-              href={`${APP_URL}/login`}
-              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-            >
-              Sign In
-            </a>
-            <a
-              href={`${APP_URL}/signup`}
-              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-            >
-              Get Started
-            </a>
-          </div>
         </div>
       </div>
     </footer>

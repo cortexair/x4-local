@@ -13,11 +13,7 @@ const NAV_LINKS = [
   { href: '/plugins', label: 'Plugins' },
   { href: '/ai', label: 'AI' },
   { href: '/about', label: 'About' },
-  { href: '/docs', label: 'Docs' },
 ];
-
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000';
-const DOCS_URL = process.env.NEXT_PUBLIC_DOCS_URL ?? 'http://localhost:3003';
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -51,64 +47,36 @@ export function Navbar() {
         <ul className="hidden items-center gap-1 md:flex">
           {NAV_LINKS.map((link) => {
             const isActive = pathname === link.href;
-            const href = link.href === '/docs' ? DOCS_URL : link.href;
-            const isExternal = link.href === '/docs';
 
             return (
               <li key={link.href}>
-                {isExternal ? (
-                  <a
-                    href={href}
-                    className={cn(
-                      'relative rounded-lg px-4 py-2 text-sm font-medium transition-colors',
-                      isActive ? 'text-foreground' : 'text-muted-foreground hover:text-foreground',
-                    )}
-                  >
-                    {link.label}
-                  </a>
-                ) : (
-                  <Link
-                    href={href}
-                    className={cn(
-                      'relative rounded-lg px-4 py-2 text-sm font-medium transition-colors',
-                      isActive ? 'text-foreground' : 'text-muted-foreground hover:text-foreground',
-                    )}
-                  >
-                    {link.label}
-                    {isActive && (
-                      <motion.div
-                        layoutId="navbar-active"
-                        className="absolute inset-0 rounded-lg bg-white/5"
-                        transition={{
-                          type: 'spring',
-                          stiffness: 350,
-                          damping: 30,
-                        }}
-                      />
-                    )}
-                  </Link>
-                )}
+                <Link
+                  href={link.href}
+                  className={cn(
+                    'relative rounded-lg px-4 py-2 text-sm font-medium transition-colors',
+                    isActive ? 'text-foreground' : 'text-muted-foreground hover:text-foreground',
+                  )}
+                >
+                  {link.label}
+                  {isActive && (
+                    <motion.div
+                      layoutId="navbar-active"
+                      className="absolute inset-0 rounded-lg bg-white/5"
+                      transition={{
+                        type: 'spring',
+                        stiffness: 350,
+                        damping: 30,
+                      }}
+                    />
+                  )}
+                </Link>
               </li>
             );
           })}
         </ul>
 
-        {/* Desktop CTA */}
-        <div className="hidden items-center gap-3 md:flex">
-          <a
-            href={`${APP_URL}/login`}
-            className="rounded-lg px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Sign In
-          </a>
-          <a
-            href={`${APP_URL}/signup`}
-            className="group relative overflow-hidden rounded-lg bg-primary px-5 py-2 text-sm font-medium text-primary-foreground transition-all hover:shadow-lg hover:shadow-primary/25"
-          >
-            <span className="relative z-10">Get Started</span>
-            <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-500 group-hover:translate-x-full" />
-          </a>
-        </div>
+        {/* Spacer */}
+        <div className="hidden md:block" />
 
         {/* Mobile menu button */}
         <button
@@ -133,26 +101,11 @@ export function Navbar() {
             <div className="mx-auto max-w-7xl space-y-1 px-6 py-4">
               {NAV_LINKS.map((link) => {
                 const isActive = pathname === link.href;
-                const href = link.href === '/docs' ? DOCS_URL : link.href;
-                const isExternal = link.href === '/docs';
 
-                return isExternal ? (
-                  <a
-                    key={link.href}
-                    href={href}
-                    className={cn(
-                      'block rounded-lg px-4 py-3 text-sm font-medium transition-colors',
-                      isActive
-                        ? 'bg-white/5 text-foreground'
-                        : 'text-muted-foreground hover:bg-white/5 hover:text-foreground',
-                    )}
-                  >
-                    {link.label}
-                  </a>
-                ) : (
+                return (
                   <Link
                     key={link.href}
-                    href={href}
+                    href={link.href}
                     className={cn(
                       'block rounded-lg px-4 py-3 text-sm font-medium transition-colors',
                       isActive
@@ -164,20 +117,6 @@ export function Navbar() {
                   </Link>
                 );
               })}
-              <div className="flex gap-3 pt-3">
-                <a
-                  href={`${APP_URL}/login`}
-                  className="flex-1 rounded-lg border border-border px-4 py-3 text-center text-sm font-medium text-foreground"
-                >
-                  Sign In
-                </a>
-                <a
-                  href={`${APP_URL}/signup`}
-                  className="flex-1 rounded-lg bg-primary px-4 py-3 text-center text-sm font-medium text-primary-foreground"
-                >
-                  Get Started
-                </a>
-              </div>
             </div>
           </motion.div>
         )}
