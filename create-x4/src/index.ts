@@ -44,18 +44,46 @@ const main = defineCommand({
       alias: 'p',
       description: `Preset: ${PRESET_NAMES.join(', ')}`,
     },
-    'no-mobile': { type: 'boolean', description: 'Exclude Expo mobile app', default: false },
-    'no-desktop': { type: 'boolean', description: 'Exclude Electron desktop app', default: false },
-    'no-marketing': { type: 'boolean', description: 'Exclude marketing site', default: false },
-    'no-docs': { type: 'boolean', description: 'Exclude docs site', default: false },
-    'no-ai': { type: 'boolean', description: 'Exclude AI integration', default: false },
+    mobile: {
+      type: 'boolean',
+      description: 'Include Expo mobile app (use --no-mobile to exclude)',
+      default: true,
+    },
+    desktop: {
+      type: 'boolean',
+      description: 'Include Electron desktop app (use --no-desktop to exclude)',
+      default: true,
+    },
+    marketing: {
+      type: 'boolean',
+      description: 'Include marketing site (use --no-marketing to exclude)',
+      default: true,
+    },
+    docs: {
+      type: 'boolean',
+      description: 'Include docs site (use --no-docs to exclude)',
+      default: true,
+    },
+    ai: {
+      type: 'boolean',
+      description: 'Include AI integration (use --no-ai to exclude)',
+      default: true,
+    },
     'mobile-name': { type: 'string', description: 'Mobile app name (default: main)' },
     pm: {
       type: 'string',
       description: 'Package manager: bun|npm|yarn|pnpm (default: auto-detect)',
     },
-    'no-git': { type: 'boolean', description: 'Skip git initialization', default: false },
-    'no-install': { type: 'boolean', description: 'Skip dependency installation', default: false },
+    git: {
+      type: 'boolean',
+      description: 'Initialize git repository (use --no-git to skip)',
+      default: true,
+    },
+    install: {
+      type: 'boolean',
+      description: 'Install dependencies (use --no-install to skip)',
+      default: true,
+    },
     yes: {
       type: 'boolean',
       alias: 'y',
@@ -76,13 +104,13 @@ const main = defineCommand({
 
     p.intro(pc.bgCyan(pc.black(' create-x4 ')));
 
-    // Collect --no-* flags
+    // Collect --no-* flags (citty/mri sets args.mobile=false when --no-mobile is passed)
     const excludeFlags: Platform[] = [];
-    if (args['no-mobile']) excludeFlags.push('mobile');
-    if (args['no-desktop']) excludeFlags.push('desktop');
-    if (args['no-marketing']) excludeFlags.push('marketing');
-    if (args['no-docs']) excludeFlags.push('docs');
-    if (args['no-ai']) excludeFlags.push('ai');
+    if (!args.mobile) excludeFlags.push('mobile');
+    if (!args.desktop) excludeFlags.push('desktop');
+    if (!args.marketing) excludeFlags.push('marketing');
+    if (!args.docs) excludeFlags.push('docs');
+    if (!args.ai) excludeFlags.push('ai');
 
     // Validate preset if provided
     if (args.preset && !PRESET_NAMES.includes(args.preset)) {
@@ -138,8 +166,8 @@ const main = defineCommand({
         mobileName,
         excludePlatforms,
         pm,
-        git: !args['no-git'],
-        install: !args['no-install'],
+        git: args.git,
+        install: args.install,
         branch: args.branch,
         verbose: args.verbose,
         cwd: process.cwd(),
@@ -152,8 +180,8 @@ const main = defineCommand({
         mobileName: args['mobile-name'],
         preset: args.preset,
         pm: args.pm,
-        noGit: args['no-git'],
-        noInstall: args['no-install'],
+        noGit: !args.git,
+        noInstall: !args.install,
         excludeFlags,
       });
 
