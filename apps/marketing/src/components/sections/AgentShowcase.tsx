@@ -13,6 +13,7 @@ const AGENTS = [
     color: 'text-violet-400',
     bgColor: 'bg-violet-500/10',
     description: 'API routes, database schema, tRPC procedures, middleware',
+    plugin: null,
     capabilities: [
       'Drizzle schema & migrations',
       'tRPC router design',
@@ -27,6 +28,7 @@ const AGENTS = [
     color: 'text-blue-400',
     bgColor: 'bg-blue-500/10',
     description: 'Pages, components, styling, client state',
+    plugin: 'frontend-design',
     capabilities: [
       'Next.js App Router pages',
       'React 19 components',
@@ -41,6 +43,7 @@ const AGENTS = [
     color: 'text-orange-400',
     bgColor: 'bg-orange-500/10',
     description: 'Security, architecture, quality audits',
+    plugin: 'code-review',
     capabilities: [
       'Security vulnerability scan',
       'Architecture review',
@@ -55,6 +58,7 @@ const AGENTS = [
     color: 'text-emerald-400',
     bgColor: 'bg-emerald-500/10',
     description: 'Unit tests, e2e tests, coverage',
+    plugin: 'playwright',
     capabilities: [
       'Bun unit & integration tests',
       'Playwright e2e tests',
@@ -69,6 +73,7 @@ const AGENTS = [
     color: 'text-cyan-400',
     bgColor: 'bg-cyan-500/10',
     description: 'Bundle size, re-renders, memory leaks, query efficiency',
+    plugin: null,
     capabilities: [
       'Bundle size analysis',
       'Re-render detection',
@@ -123,6 +128,12 @@ export function AgentShowcase() {
                   </div>
                 </div>
                 <p className="mt-3 text-sm text-muted-foreground">{agent.description}</p>
+                {agent.plugin && (
+                  <div className="mt-2 inline-flex items-center gap-1.5 rounded-md bg-white/5 px-2 py-1 text-[10px] font-medium text-muted-foreground">
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                    Enhanced by <code className="text-foreground">{agent.plugin}</code>
+                  </div>
+                )}
                 <ul className="mt-4 space-y-1.5">
                   {agent.capabilities.map((cap) => (
                     <li key={cap} className="flex items-center gap-2 text-xs text-muted-foreground">
