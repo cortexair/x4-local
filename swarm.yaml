@@ -1,0 +1,47 @@
+# swarm.yaml — Swarm integration config stub for x4-local
+# This file is reserved for future Swarm orchestration configuration.
+# See: https://github.com/studiox4/swarm (TBD)
+
+version: '1'
+
+project:
+  name: x4-local
+  description: Full-stack TypeScript monorepo — local-first fork of x4-mono
+
+# --- Services ---
+# Map logical service names to their workspace paths and ports.
+services:
+  api:
+    path: apps/api
+    port: 3002
+    command: bun dev
+
+  web:
+    path: apps/web
+    port: 3000
+    command: bun dev
+
+  marketing:
+    path: apps/marketing
+    port: 3001
+    command: bun dev
+
+# --- Agents ---
+# Future: define autonomous agent personas that Swarm dispatches.
+# agents:
+#   backend:
+#     role: Backend architect — Hono, tRPC, database
+#   frontend:
+#     role: Frontend architect — Next.js, React, Tailwind
+#   reviewer:
+#     role: Code reviewer — conventions, boundaries, security
+
+# --- Integrations ---
+# Future: wire up external tools that agents can call.
+# integrations:
+#   database:
+#     type: postgres
+#     url: ${DATABASE_URL}
+#   cache:
+#     type: redis
+#     url: ${UPSTASH_REDIS_REST_URL}   # optional

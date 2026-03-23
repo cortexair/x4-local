@@ -1,8 +1,20 @@
-# CLAUDE.md — x4-mono
+# CLAUDE.md — x4-local
+
+> **Fork of [corbanb/x4-mono](https://github.com/corbanb/x4-mono)**
+> Customized for local-first development — no Neon cloud database required.
+> Database: local Postgres via Docker (`docker-compose up`).
 
 ## Project Overview
 
-x4-mono is a full-stack TypeScript monorepo boilerplate for building multi-platform applications (web, mobile, desktop) with a shared backend. It provides a production-ready foundation with type-safe APIs, authentication, database ORM, AI integration, and CI/CD — all wired together with consistent conventions.
+x4-local is a full-stack TypeScript monorepo boilerplate for building multi-platform applications (web, mobile, desktop) with a shared backend. It provides a production-ready foundation with type-safe APIs, authentication, database ORM, AI integration, and CI/CD — all wired together with consistent conventions.
+
+**Local-first changes from upstream:**
+
+- Database driver switched from `@neondatabase/serverless` → `postgres` (postgres.js) with `drizzle-orm/postgres-js`
+- Local Postgres runs via `docker-compose up` at `postgresql://fantasy:fantasy@localhost:5435/fantasy`
+- No Neon account required — `bun db:push` works against Docker immediately
+- Redis/Upstash is optional — cache and rate-limiting fail open if not configured
+- `swarm.yaml` stub added for future Swarm integration
 
 ## Architecture
 
@@ -14,7 +26,7 @@ x4-mono is a full-stack TypeScript monorepo boilerplate for building multi-platf
 - **Desktop**: Electron (`apps/desktop`)
 - **Marketing**: Next.js static (`apps/marketing`, port 3001)
 - **Storybook**: Component catalog (`apps/storybook`, port 6006)
-- **Database**: Neon (Postgres) + Drizzle ORM (`packages/database`)
+- **Database**: Local Postgres (Docker, port 5435) + Drizzle ORM (`packages/database`)
 - **Auth**: Better Auth with bearer tokens (`packages/auth`)
 - **AI**: Vercel AI SDK + Claude (`packages/ai-integrations`)
 - **Validation**: Zod (source of truth for all types)
@@ -289,19 +301,19 @@ Each PRD Section 6 contains a task table with columns: Task #, Description, Esti
 
 Key environment variables (defined in `apps/api/src/lib/env.ts`):
 
-| Variable             | Description                                                    | Required |
-| -------------------- | -------------------------------------------------------------- | -------- |
-| `DATABASE_URL`       | Neon Postgres connection string                                | Yes      |
-| `JWT_SECRET`         | Secret for token signing (min 32 chars)                        | Yes      |
-| `BETTER_AUTH_SECRET` | Secret for auth (min 32 chars)                                 | Yes      |
-| `ANTHROPIC_API_KEY`  | Claude API key (starts with `sk-`)                             | Yes      |
-| `BETTER_AUTH_URL`    | Auth callback URL (default: `http://localhost:3002`)           | No       |
-| `PORT`               | API server port (default: 3002)                                | No       |
-| `WEB_URL`            | Web app URL for CORS (default: `http://localhost:3000`)        | No       |
-| `MARKETING_URL`      | Marketing site URL for CORS (default: `http://localhost:3001`) | No       |
-| `DOCS_URL`           | Docs site URL for CORS (default: `http://localhost:3003`)      | No       |
-| `NODE_ENV`           | `development` / `production` / `test`                          | No       |
-| `APP_VERSION`        | App version string                                             | No       |
+| Variable             | Description                                                           | Required |
+| -------------------- | --------------------------------------------------------------------- | -------- |
+| `DATABASE_URL`       | Local Postgres: `postgresql://fantasy:fantasy@localhost:5435/fantasy` | Yes      |
+| `JWT_SECRET`         | Secret for token signing (min 32 chars)                               | Yes      |
+| `BETTER_AUTH_SECRET` | Secret for auth (min 32 chars)                                        | Yes      |
+| `ANTHROPIC_API_KEY`  | Claude API key (starts with `sk-`)                                    | Yes      |
+| `BETTER_AUTH_URL`    | Auth callback URL (default: `http://localhost:3002`)                  | No       |
+| `PORT`               | API server port (default: 3002)                                       | No       |
+| `WEB_URL`            | Web app URL for CORS (default: `http://localhost:3000`)               | No       |
+| `MARKETING_URL`      | Marketing site URL for CORS (default: `http://localhost:3001`)        | No       |
+| `DOCS_URL`           | Docs site URL for CORS (default: `http://localhost:3003`)             | No       |
+| `NODE_ENV`           | `development` / `production` / `test`                                 | No       |
+| `APP_VERSION`        | App version string                                                    | No       |
 
 ## Plugins & Developer Tooling
 
